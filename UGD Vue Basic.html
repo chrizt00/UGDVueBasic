@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unguided 1</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="card text-center bg-dark mb-3"></ddiv>
+            <div class="card-header text-white">
+              Tebak Angka
+            </div>
+            <div class="card-body text-white">
+                <input type="number" class="form-control center-block" v-model="tebakan"  style="max-width: 10%; margin-left: 45%" :disabled="isDisabled"/>
+                <br>
+                <button class="btn btn-primary btn-sm" @click="tebak" :disabled="isDisabled">Tebak</button>     
+            <h4>Kesempatan : {{ kesempatan }}</h4>
+            <div class="d-none d-print-block">{{ angka }}</div>
+            <!-- {{ angka }} -->
+        </div>
+            <div class="card-footer text-white">
+              {{ mhs.nama }} || {{ mhs.nim }} || {{ mhs.kelas }}
+            </div>
+        </div>
+
+            <div class="text-center" v-show="benar">
+                <p>SELAMAT ANDA BENAR ~ </p> 
+                <button class="btn btn-success" @click="playagain" >main lagi</button>
+            </div>
+            <div class="text-center" v-show="kalah">
+                <p>SORRY KAMU KALAH ~ </p> 
+                <button class="btn btn-danger" @click="playagain" >main lagi</button>
+            </div>
+            <div class="text-center" v-show="salah">
+                <p>ANDA SALAH, YUK COBA LAGI MASIH ADA {{ kesempatan }} Kesempatan </p> 
+                <button class="btn btn-warning" @click="tryagain" >Coba lagi</button>
+            </div>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            angka: Math.floor(Math.random() * 10)+1,
+            tebakan:0,
+            kesempatan:3,
+            salah:undefined,
+            benar:undefined,
+            kalah:undefined,
+            isDisabled:false,
+            mhs: {
+                nama:'Hendrianto',
+                nim: '180709641',
+                kelas: 'A',
+            },
+        },
+        methods: {
+           tebak(){
+            if(this.tebakan == this.angka){
+                this.benar = 1;
+            }else {
+                    this.salah =1;
+                    this.isDisabled = true;
+                    this.kesempatan--;
+                    if(this.kesempatan==0){
+                        this.kalah=1;
+                        this.salah = undefined;
+                    }
+            }
+               
+           },
+           tryagain(){
+                this.isDisabled = false;
+                this.salah = undefined;
+           },
+           playagain(){
+               location.reload();
+           }
+        },
+ 
+    });
+</script>
+</html>

@@ -1,0 +1,65 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app" class="container">
+        <div class="form-group">
+            <h1>Todo List</h1>
+            <input type="text" class="form-control" name="todo" id="todo" placeholder="Nama Todo"
+            v-model="todo" @keyup.enter="addTodo">
+            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                <option selected>Prioritas</option>
+                <option value="penting">Penting</option>
+                <option value="biasa">Biasa</option>
+                <option value="tidak penting">Tidak Penting</option>
+              </select>
+            <textarea class="form-control" rows="3" placeholder="Catatan"></textarea>
+            <button class="btn btn-primary" @click="addTodo()" style="margin-top : 8px;">Add</button>
+        </div>
+        <table class="table" v-if="todos.length > 0">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Todo</th>
+                    <th scope="col">Test</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody v-for="(todo,index) in todos" :key="index">
+                <td scope="row">{{ index }}</td>
+                <td>{{ todo }}</td>
+                <td>{{ test }}</td>
+                <td><button class="btn btn-danger" @click="deleteTodo(index)">Delete</button></td>
+            </tbody>
+        </table>
+        <h1 v-else>Todo Kosong</h1>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                todos:["test1","test2"],
+                test:["test11","test22"],
+                todo: "",
+            }
+        },
+        methods: {
+            addTodo(){
+                this.todos.push(this.todo);
+                this.todo = "";
+            },
+            deleteTodo(index){
+                this.todos.splice(index,1);
+            }
+        }
+    })
+</script>
+</html>
